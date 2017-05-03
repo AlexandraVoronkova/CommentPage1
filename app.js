@@ -6,7 +6,7 @@ var app = express();
 app.use( bodyParser.urlencoded({extended: true}) );
 app.use( bodyParser.json());
 
-var Comments=require('D://4/Node/CommentPage/models/comment.js').Comment;
+var Comments=require('./models/comment.js').Comment;
 
 //Обработчик корня '/'
 app.get('/',function (req, res) {
