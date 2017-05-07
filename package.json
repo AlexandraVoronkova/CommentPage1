@@ -4,7 +4,11 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
-    "mongoose": "^4.9.7"
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "mongodb": "^2.2.26",
+    "mongodbext": "^2.1.0",
+    "twostep": "^0.4.2"
   },
   "devDependencies": {},
   "scripts": {

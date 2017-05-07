@@ -1,45 +1,43 @@
 var express = require( 'express' );
-var bodyParser = require ( 'body-Parser' );
 
-var app = express();
+function startApp(){
+	var app = express();
+	var comments = require('./routes/comments.js');
+	app.use('./routes/comments.js', comments);
+	app.get('/comments', comments);
+	app.post('/comments', comments);
+	
+	app.listen(3000,function(){
+		console.log('Work on port : 3000');
+	});
+}
 
-app.use( bodyParser.urlencoded({extended: true}) );
-app.use( bodyParser.json());
+var MongoClient = require('mongodb').MongoClient;
+var Collection = require('mongodbext').Collection;
 
-var Comments=require('D://4/Node/CommentPage/models/comment.js').Comment;
-
-//Обработчик корня '/'
-app.get('/',function (req, res) {
-	Comments.find({}, function(err, comments){
-		if(err) {
-			res.send(err);
+MongoClient.connect('mongodb://localhost:27017/chat',function(err, db){
+		if (err) {
+			console.error(err);
+			return;
 		}
 		else{
-			res.render('index.ejs', {comments:comments});
+			collection = db.collection('comments');
+			startApp();
 		}
 	});
-});
 
-app.post('/',function(req,res){
-	res.redirect('/write');
-});
+//var Step = require('twostep').Step;
 
-app.get('/write',function(req, res){
-	res.render('write.ejs');
-});
-
-//обработчик получения данных
-app.post('/write',function(req,res){
-	//получаем переменные с данными из формы /write
-	var name=req.body.name; 
-	var comment=req.body.comment;
-	//добавление комментария в БД
-	var newComm = new Comments({name: name, comment:comment});
-	newComm.save();
-	//перейти обратно в корень сайта
-	res.redirect('/');
-});
-
-app.listen(3000,function(){
-	console.log('Work on port : 3000');
-});
+/*Step(
+	MongoClient.connect('mongodb://localhost:27017/chat'),
+	function(err, db){
+		if (err) {
+			console.error(err);
+			return;
+		}
+		else{
+			collection = db.collection('comments');
+			startApp();
+		}
+	}
+);*/

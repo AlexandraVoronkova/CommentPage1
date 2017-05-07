@@ -8,14 +8,18 @@
 	<h1>Страница с комментариями</h1>
 	<hr>
 	<% for (var i = 0; i < comments.length; i++) { %>
-	<div class="comment">
+	<div>
 		<p><b><%=comments[i].name%> </b>[<%=comments[i].date%>]:<br>
 		<%=comments[i].comment%></p>
 	</div>
 	<% } %>
-	
-	<form method="post">
-		<button>Написать комментарий</button>
+	<br>
+	<form action="/comments" method="post">
+	<label for="name">Имя пользователя: </label><br>
+		<input type="text" name="name" id="name"><br>
+		<label for="comment">Комментарий: </label><br>
+		<textarea name="comment" id="comment" ></textarea><br>
+		<button>Добавить новый комментарий</button>
 	</form>
 </body>
 </html>
